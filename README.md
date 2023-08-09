@@ -1,5 +1,5 @@
 # Simple-File-Sorting
-Just like it is named, it is a simple utility to sort files for anyone like me who are lazy to sort files by hand.
+Just like it is named, it is a simple utility to sort files for anyone like me who is lazy to sort files by hand.
 Created only for Windows. (Tested in Windows 11)
 
 Setup is required before usage.  In the settings tab a "Category" will be the folder name for the "Sort by File Types", and
