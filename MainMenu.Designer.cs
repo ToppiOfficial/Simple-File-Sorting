@@ -355,9 +355,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(589, 459);
             Controls.Add(tabControl1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainMenu";
-            Text = "Form1";
+            Text = "21";
             tabControl1.ResumeLayout(false);
             tabSort.ResumeLayout(false);
             tabSetting.ResumeLayout(false);
