@@ -53,9 +53,9 @@
             listBoxFormats = new ListBox();
             listBoxFolders = new ListBox();
             tabAbout = new TabPage();
-            iconCollection = new ImageList(components);
-            textBox1 = new TextBox();
             panel1 = new Panel();
+            textBox1 = new TextBox();
+            iconCollection = new ImageList(components);
             tabControl1.SuspendLayout();
             tabSort.SuspendLayout();
             tabSetting.SuspendLayout();
@@ -318,26 +318,6 @@
             tabAbout.Text = "About";
             tabAbout.UseVisualStyleBackColor = true;
             // 
-            // iconCollection
-            // 
-            iconCollection.ColorDepth = ColorDepth.Depth32Bit;
-            iconCollection.ImageStream = (ImageListStreamer)resources.GetObject("iconCollection.ImageStream");
-            iconCollection.TransparentColor = Color.Transparent;
-            iconCollection.Images.SetKeyName(0, "settings.png");
-            iconCollection.Images.SetKeyName(1, "use-case.png");
-            iconCollection.Images.SetKeyName(2, "info.png");
-            // 
-            // textBox1
-            // 
-            textBox1.Dock = DockStyle.Bottom;
-            textBox1.Location = new Point(0, 291);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(581, 120);
-            textBox1.TabIndex = 1;
-            textBox1.Text = "Resources:\r\nIcons: www.flaticon.com\r\n\r\nAbout Image Source: Laika (Slime Taoshite 300-nen, Shiranai Uchi ni Level Max ni Nattemashita)\r\n\r\nGithub: https://github.com/ToppiOfficial/Simple-File-Sorting\r\n";
-            textBox1.TextAlign = HorizontalAlignment.Center;
-            // 
             // panel1
             // 
             panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
@@ -347,6 +327,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(581, 291);
             panel1.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            textBox1.Dock = DockStyle.Bottom;
+            textBox1.Location = new Point(0, 291);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(581, 120);
+            textBox1.TabIndex = 1;
+            textBox1.Text = "Resources:\r\nIcons: www.flaticon.com\r\n\r\nAbout Image Source: Laika (Slime Taoshite 300-nen, Shiranai Uchi ni Level Max ni Nattemashita)\r\n\r\nGithub: https://github.com/ToppiOfficial/Simple-File-Sorting\r\n";
+            textBox1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // iconCollection
+            // 
+            iconCollection.ColorDepth = ColorDepth.Depth32Bit;
+            iconCollection.ImageStream = (ImageListStreamer)resources.GetObject("iconCollection.ImageStream");
+            iconCollection.TransparentColor = Color.Transparent;
+            iconCollection.Images.SetKeyName(0, "settings.png");
+            iconCollection.Images.SetKeyName(1, "use-case.png");
+            iconCollection.Images.SetKeyName(2, "info.png");
             // 
             // MainMenu
             // 
