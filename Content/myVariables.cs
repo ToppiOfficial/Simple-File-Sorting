@@ -6,10 +6,24 @@ using System.Threading.Tasks;
 
 namespace Simple_File_Sorting.Content
 {
-    public class myVariables
+
+    public static class myVariables
     {
+
         public static string applicationBuild = "1.0";
+
+        public static string? DateFormat { get; set; }
+
+        public static string[] CriticalSystemPaths =
+        {
+            Environment.GetFolderPath(Environment.SpecialFolder.Windows),
+            Environment.GetFolderPath(Environment.SpecialFolder.System),
+            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles),
+        };
+
     }
+
     public class fileFormats
     {
         public string fileFormat { get; set; }

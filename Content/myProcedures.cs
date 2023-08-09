@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -62,7 +63,7 @@ namespace Simple_File_Sorting.Content
 
             inputTextBox.KeyPress += (s, e) =>
             {
-                if (char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Enter)
+                if (char.IsLetterOrDigit(e.KeyChar) || char.IsWhiteSpace(e.KeyChar) || e.KeyChar == (char)Keys.Back || e.KeyChar == (char)Keys.Enter)
                 {
                     if (e.KeyChar == (char)Keys.Enter)
                     {
@@ -76,24 +77,27 @@ namespace Simple_File_Sorting.Content
                 }
             };
 
-            textPromptForm.Controls.Add(inputTextBox);
-            textPromptForm.Controls.Add(okButton);
-
-            if (textPromptForm.ShowDialog() == DialogResult.OK)
-            {
-                string inputText = inputTextBox.Text.Replace(".", "").ToLower();
-                return inputText;
-            }
-            else
-            {
-                return "";
-            }
+            textPromptForm.ShowDialog();
+            return inputTextBox.Text;
         }
+
 
 
         #endregion Window
 
         #region Functions
+
+        public bool IsCriticalSystemPath(string path)
+        {
+            foreach (string criticalPath in myVariables.CriticalSystemPaths)
+            {
+                if (path.StartsWith(criticalPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public void AddCategory()
         {
@@ -120,7 +124,6 @@ namespace Simple_File_Sorting.Content
                     selectedCategory = categories[prevWindow.listBoxFolders.SelectedIndex];
                     string studioName = userInput;
 
-                    // Check if the format already exists in any category
                     bool formatExists = false;
                     foreach (folderCategories category in categories)
                     {
@@ -204,8 +207,17 @@ namespace Simple_File_Sorting.Content
 
         public void SaveDataToJson()
         {
-            string jsonData = JsonConvert.SerializeObject(categories, Newtonsoft.Json.Formatting.Indented);
+            var dataToSave = new
+            {
+                DateFormat = myVariables.DateFormat,
+                Categories = categories
+            };
+
+            string jsonData = JsonConvert.SerializeObject(dataToSave, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText("data.json", jsonData);
+
+            //string jsonData = JsonConvert.SerializeObject(new { myVariables.DateFormat, categories }, Newtonsoft.Json.Formatting.Indented);
+            //File.WriteAllText("data.json", jsonData);
         }
 
         public void LoadDataFromJson()
@@ -213,7 +225,12 @@ namespace Simple_File_Sorting.Content
             if (File.Exists("data.json"))
             {
                 string jsonData = File.ReadAllText("data.json");
-                categories = JsonConvert.DeserializeObject<List<folderCategories>>(jsonData);
+                var loadedData = JsonConvert.DeserializeObject<dynamic>(jsonData);
+
+                myVariables.DateFormat = loadedData.DateFormat;
+                categories = loadedData.Categories.ToObject<List<folderCategories>>();
+
+                prevWindow.textBoxDateFormat.Text = myVariables.DateFormat;
 
                 prevWindow.listBoxFolders.Items.Clear();
                 foreach (folderCategories category in categories)
@@ -221,14 +238,12 @@ namespace Simple_File_Sorting.Content
                     prevWindow.listBoxFolders.Items.Add(category.folderCategory);
                 }
 
-                // Select the first category if available
                 if (prevWindow.listBoxFolders.Items.Count > 0)
                 {
                     prevWindow.listBoxFolders.SelectedIndex = 0;
                 }
             }
         }
-
         #endregion Functions
     }
 }
