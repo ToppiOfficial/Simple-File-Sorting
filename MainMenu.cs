@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using Simple_File_Sorting.Content;
 using System.IO;
 using System.Security.Policy;
+using System.Windows.Forms;
 
 namespace Simple_File_Sorting
 {
@@ -10,6 +11,7 @@ namespace Simple_File_Sorting
         #region Declaration
 
         myProcedures Procedures;
+        string dateFormat;
 
         int currentFile = 0;
         int MaxFileCount = 0;
@@ -185,9 +187,15 @@ namespace Simple_File_Sorting
 
             if (comboBoxSortType.SelectedIndex == 0)
             {
+                dateFormat = myVariables.DateFormat;
+                if (string.IsNullOrEmpty(dateFormat))
+                {
+                    dateFormat = "yyyy-MM";
+                }
                 switch (pressedButton.Name)
                 {
                     case "buttonSort":
+
                         if (listBoxFolderPaths.SelectedIndex == -1)
                         {
                             MessageBox.Show("Please select a folder to sort");
@@ -294,12 +302,12 @@ namespace Simple_File_Sorting
 
             if (comboBoxSortType.SelectedIndex == 1)
             {
-                string dateFormat = myVariables.DateFormat;
+                dateFormat = myVariables.DateFormat;
                 if (string.IsNullOrEmpty(dateFormat))
                 {
                     dateFormat = "yyyy-MM";
                 }
-                if (!myVariables.DateFormat.Contains("yyyy") || !myVariables.DateFormat.Contains("MM"))
+                if (!dateFormat.Contains("yyyy") || !dateFormat.Contains("MM"))
                 {
                     MessageBox.Show("You have incorrect date format in the settings! Must have YYYY and MM");
                     return;
@@ -310,7 +318,15 @@ namespace Simple_File_Sorting
 
                 switch (pressedButton.Name)
                 {
+
                     case "buttonSort":
+
+                        if (listBoxFolderPaths.SelectedIndex == -1)
+                        {
+                            MessageBox.Show("Please select a folder to sort");
+                            return;
+                        }
+
                         getpath = listBoxFolderPaths.SelectedItem.ToString();
                         files = Directory.GetFiles(getpath);
 
