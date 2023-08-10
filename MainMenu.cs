@@ -27,7 +27,6 @@ namespace Simple_File_Sorting
             Procedures = new myProcedures(this);
             Procedures.categories = new List<folderCategories>();
 
-            this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = $"Simple File Sorting Utility by ToppiOfficial [ver {myVariables.applicationBuild}]";
 
