@@ -9,53 +9,29 @@ namespace Simple_File_Sorting.Content
 {
     internal class myUpdater
     {
+        private const string GithubVersionUrl = "https://raw.githubusercontent.com/ToppiOfficial/SimpleFileSorting/testing/version.txt";
+        private const string GithubExecutableUrl = "https://github.com/ToppiOfficial/SimpleFileSorting/releases/download/v{0}/SimpleFileSorting.exe";
+
         public void CheckForUpdates()
         {
-            string githubVersionUrl = "https://github.com/ToppiOfficial/SimpleFileSorting/blob/master/version.txt";
-            string githubExecutableUrl = "https://github.com/ToppiOfficial/SimpleFileSorting/releases/download/v{0}/SimpleFileSorting.exe";
-            string localVersion = myVariables.applicationBuild;
-            string latestVersion = "";
-
-            using (WebClient client = new WebClient())
+            try
             {
-                try
+                Version localVersion = new Version(myVariables.applicationBuild);
+                Version latestVersion = new Version(GetLatestVersion());
+
+                if (latestVersion > localVersion)
                 {
-                    latestVersion = client.DownloadString(githubVersionUrl).Trim();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error checking for updates: " + ex.Message);
+                    MessageBox.Show($"New Update Detected: Current Ver: {localVersion}. New Ver: {latestVersion}");
                 }
             }
+            catch { }
+        }
 
-            if (latestVersion != "" && latestVersion != localVersion)
+        private string GetLatestVersion()
+        {
+            using (HttpClient client = new HttpClient())
             {
-                MessageBox.Show("New Update Detected");
-                string updatedExecutableUrl = string.Format(githubExecutableUrl, latestVersion);
-                string tempPath = Path.Combine(Path.GetTempPath(), "SimpleFileSorting_temp.exe");
-
-                using (WebClient client = new WebClient())
-                {
-                    try
-                    {
-                        MessageBox.Show("Test");
-                       // client.DownloadFile(updatedExecutableUrl, tempPath);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error downloading updated executable: " + ex.Message);
-                    }
-                }
-
-                try
-                {
-                    string currentExecutablePath = AppDomain.CurrentDomain.FriendlyName;
-                    File.Replace(tempPath, currentExecutablePath, null, true);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error replacing executable: " + ex.Message);
-                }
+                return client.GetStringAsync(GithubVersionUrl).Result.Trim();
             }
         }
     }

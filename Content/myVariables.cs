@@ -10,7 +10,7 @@ namespace Simple_File_Sorting.Content
     public static class myVariables
     {
 
-        public static string applicationBuild = "1.30";
+        public static string applicationBuild = "2.0";
 
         public static string? DateFormat { get; set; }
 
