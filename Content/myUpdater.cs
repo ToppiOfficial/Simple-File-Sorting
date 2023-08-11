@@ -10,7 +10,6 @@ namespace Simple_File_Sorting.Content
     internal class myUpdater
     {
         private const string GithubVersionUrl = "https://raw.githubusercontent.com/ToppiOfficial/SimpleFileSorting/testing/version.txt";
-        private const string GithubExecutableUrl = "https://github.com/ToppiOfficial/SimpleFileSorting/releases/download/v{0}/SimpleFileSorting.exe";
 
         public void CheckForUpdates()
         {
