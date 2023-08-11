@@ -12,6 +12,7 @@ namespace Simple_File_Sorting
 
         myProcedures Procedures;
         string dateFormat;
+        myUpdater CheckUpdate = new myUpdater();
 
         int currentFile = 0;
         int MaxFileCount = 0;
@@ -22,6 +23,7 @@ namespace Simple_File_Sorting
 
         public MainMenu()
         {
+            CheckUpdate.CheckForUpdates();
             InitializeComponent();
 
             Procedures = new myProcedures(this);
@@ -35,6 +37,7 @@ namespace Simple_File_Sorting
             buttonAddFormat.Enabled = false;
 
             Procedures.LoadDataFromJson();
+            
         }
 
         #endregion Constructor
